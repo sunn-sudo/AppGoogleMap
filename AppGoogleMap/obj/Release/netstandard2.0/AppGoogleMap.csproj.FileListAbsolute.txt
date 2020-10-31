@@ -1,0 +1,14 @@
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\bin\Release\netstandard2.0\AppGoogleMap.deps.json
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\bin\Release\netstandard2.0\AppGoogleMap.dll
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\bin\Release\netstandard2.0\ref\AppGoogleMap.dll
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\bin\Release\netstandard2.0\AppGoogleMap.pdb
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\AppGoogleMap.csprojAssemblyReference.cache
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\App.xaml.g.cs
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\MainPage.xaml.g.cs
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\AppGoogleMap.AssemblyInfoInputs.cache
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\AppGoogleMap.AssemblyInfo.cs
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\AppGoogleMap.csproj.CoreCompileInputs.cache
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\XamlC.stamp
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\AppGoogleMap.dll
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\ref\AppGoogleMap.dll
+C:\Users\min_local\source\repos\AppGoogleMap\AppGoogleMap\obj\Release\netstandard2.0\AppGoogleMap.pdb

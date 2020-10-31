@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppGoogleMap.MainPage"
+             Title="Native map app">
+    <StackLayout Margin="10">
+        <Label Text="現在地周辺のスポットを検索します。" />
+        <Button Text="銭湯" Clicked="OnButtonClicked" />
+        <Button Text="温泉" Clicked="OnButtonClicked" />
+        <Button Text="ゲーセン" Clicked="OnButtonClicked" />
+        <Button Text="ランチ" Clicked="OnButtonClicked" />
+        <Button Text="漫画喫茶" Clicked="OnButtonClicked" />
+    </StackLayout>
+</ContentPage>
