@@ -3,6 +3,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+using System.Windows.Input;
 
 namespace AppGoogleMap
 {
@@ -26,11 +27,16 @@ namespace AppGoogleMap
             InitializeComponent();
             var sl = (StackLayout)(this.Content = new StackLayout());
             var Label = new Label() { Text = "現在地周辺のスポットを検索します。" };
+            var UpdateWordBtn = new Button() { Text = "更新する" };
             var AddWordBtn = new Button() { Text = "検索ワードを追加する" };
             sl.Margin = 5;
             sl.Children.Add(Label);
+            sl.Children.Add(UpdateWordBtn);
             sl.Children.Add(AddWordBtn);
-            // AddWordBtn.Clicked += OnButtonClicked;
+            // ページ更新
+            UpdateWordBtn.Clicked += UpdatePage;
+            // ページ遷移
+            AddWordBtn.Clicked += NextPage;
 
             // データベース初期設定
             using (var db = new SQLite.SQLiteConnection(DbPath))
@@ -41,12 +47,12 @@ namespace AppGoogleMap
                 {
                     var SearchBtn = new Button() { Text = row.Word };
                     sl.Children.Add(SearchBtn);
-                    SearchBtn.Clicked += OnButtonClicked;
+                    SearchBtn.Clicked += OnButtonSearch;
                 }
             }
         }
 
-        async void OnButtonClicked(object sender, EventArgs e)
+        async void OnButtonSearch(object sender, EventArgs e)
         {
             if (Device.RuntimePlatform == Device.Android)
             {
@@ -69,17 +75,38 @@ namespace AppGoogleMap
 
             }
         }
+        private void UpdatePage(object sender, EventArgs e)
+        {
+            var sl = (StackLayout)(this.Content = new StackLayout());
+            var Label = new Label() { Text = "現在地周辺のスポットを検索します。" };
+            var UpdateWordBtn = new Button() { Text = "更新する" };
+            var AddWordBtn = new Button() { Text = "検索ワードを追加する" };
+            sl.Margin = 5;
+            sl.Children.Add(Label);
+            sl.Children.Add(UpdateWordBtn);
+            sl.Children.Add(AddWordBtn);
+            // ページ更新
+            UpdateWordBtn.Clicked += UpdatePage;
+            // ページ遷移
+            AddWordBtn.Clicked += NextPage;
 
-        // Insert
-        private void Button2_Clicked(object sender, EventArgs e)
-        {   // データ追加
+            // データベース初期設定
             using (var db = new SQLite.SQLiteConnection(DbPath))
-            {   // Insert
-                db.Insert(new SearchWord() { Word = "SearchWord 12 Word", TimeStamp = DateTime.Now});
-                db.Insert(new SearchWord() { Word = "SearchWord 23 Word", TimeStamp = DateTime.Now});
-                db.Insert(new SearchWord() { Word = "SearchWord 34 Word", TimeStamp = DateTime.Now});
-                db.Insert(new SearchWord() { Word = "SearchWord 45 Word", TimeStamp = DateTime.Now});
+            {   // テーブル作成
+                db.CreateTable<SearchWord>();
+                // データ取得
+                foreach (var row in db.Table<SearchWord>())
+                {
+                    var SearchBtn = new Button() { Text = row.Word };
+                    sl.Children.Add(SearchBtn);
+                    SearchBtn.Clicked += OnButtonSearch;
+                }
             }
+        }
+
+        private void NextPage(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new SubPage());
         }
 
     }

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppGoogleMap.SubPage"
+             Title="検索ワード登録画面">
+    <StackLayout>
+        <Label Text="登録する検索ワードを入力してください。" />
+        <Entry Grid.Column="1" Placeholder="登録内容" />
+        <Button Text="登録" Clicked="OnButtonInsert" />
+    </StackLayout>
+</ContentPage>
