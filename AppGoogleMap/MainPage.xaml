@@ -3,4 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppGoogleMap.MainPage"
              Title="メイン画面">
+    <StackLayout Margin="10">
+        <Label Text="現在地周辺のスポットを検索します。" />
+        <Button Text="検索ワードを追加する" Clicked="NextPage"/>
+        <ListView 
+        x:Name="wordList"
+        HasUnevenRows="true">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Horizontal">
+                            <StackLayout 
+                                Orientation="Vertical">
+                                <Label Text="{Binding TimeStamp}" />
+                                <Button Text="{Binding Word}" Clicked="OnButtonSearch" />
+                            </StackLayout>
+                            <Image
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            BackgroundColor="Olive" 
+                            VerticalOptions="Center"
+                            HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>

@@ -3,7 +3,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
-using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace AppGoogleMap
 {
@@ -15,6 +15,19 @@ namespace AppGoogleMap
         public DateTime TimeStamp { get; set; }
     }
 
+    // リスト1件のデータを表すクラス
+    public class SearchWordList
+    {
+        public string TimeStamp { get; set; }
+        public string Word { get; set; }
+
+        public SearchWordList(string TimeStamp, string Word)
+        {
+            this.TimeStamp = TimeStamp;
+            this.Word = Word;
+        }
+    }
+
     public partial class MainPage : ContentPage
     {
         public static string DbPath { get; }
@@ -22,22 +35,10 @@ namespace AppGoogleMap
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 , "SQLiteDataBase.db");
 
+        private List<SearchWordList> WordListData = new List<SearchWordList>();
         public MainPage()
         {
             InitializeComponent();
-            var sl = (StackLayout)(this.Content = new StackLayout());
-            var Label = new Label() { Text = "現在地周辺のスポットを検索します。" };
-            var UpdateWordBtn = new Button() { Text = "更新する" };
-            var AddWordBtn = new Button() { Text = "検索ワードを追加する" };
-            sl.Margin = 5;
-            sl.Children.Add(Label);
-            sl.Children.Add(UpdateWordBtn);
-            sl.Children.Add(AddWordBtn);
-            // ページ更新
-            UpdateWordBtn.Clicked += UpdatePage;
-            // ページ遷移
-            AddWordBtn.Clicked += NextPage;
-
             // データベース初期設定
             using (var db = new SQLite.SQLiteConnection(DbPath))
             {   // テーブル作成
@@ -45,11 +46,12 @@ namespace AppGoogleMap
                 // データ取得
                 foreach (var row in db.Table<SearchWord>())
                 {
-                    var SearchBtn = new Button() { Text = row.Word };
-                    sl.Children.Add(SearchBtn);
-                    SearchBtn.Clicked += OnButtonSearch;
+                    WordListData.Add(new SearchWordList(row.TimeStamp.ToString(), row.Word));
                 }
             }
+
+            // ListViewにデータソースをセット
+            wordList.ItemsSource = WordListData;
         }
 
         async void OnButtonSearch(object sender, EventArgs e)
@@ -73,34 +75,6 @@ namespace AppGoogleMap
                     await DisplayAlert("確認", "位置情報をオンにしてください。", "OK");
                 }
 
-            }
-        }
-        private void UpdatePage(object sender, EventArgs e)
-        {
-            var sl = (StackLayout)(this.Content = new StackLayout());
-            var Label = new Label() { Text = "現在地周辺のスポットを検索します。" };
-            var UpdateWordBtn = new Button() { Text = "更新する" };
-            var AddWordBtn = new Button() { Text = "検索ワードを追加する" };
-            sl.Margin = 5;
-            sl.Children.Add(Label);
-            sl.Children.Add(UpdateWordBtn);
-            sl.Children.Add(AddWordBtn);
-            // ページ更新
-            UpdateWordBtn.Clicked += UpdatePage;
-            // ページ遷移
-            AddWordBtn.Clicked += NextPage;
-
-            // データベース初期設定
-            using (var db = new SQLite.SQLiteConnection(DbPath))
-            {   // テーブル作成
-                db.CreateTable<SearchWord>();
-                // データ取得
-                foreach (var row in db.Table<SearchWord>())
-                {
-                    var SearchBtn = new Button() { Text = row.Word };
-                    sl.Children.Add(SearchBtn);
-                    SearchBtn.Clicked += OnButtonSearch;
-                }
             }
         }
 

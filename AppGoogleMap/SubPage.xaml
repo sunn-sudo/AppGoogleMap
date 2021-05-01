@@ -5,7 +5,7 @@
              Title="検索ワード登録画面">
     <StackLayout>
         <Label Text="登録する検索ワードを入力してください。" />
-        <Entry Grid.Column="1" Placeholder="登録内容" />
+        <Entry x:Name="insertText" Placeholder="登録内容" MaxLength="100" />
         <Button Text="登録" Clicked="OnButtonInsert" />
     </StackLayout>
 </ContentPage>
