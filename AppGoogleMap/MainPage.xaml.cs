@@ -3,7 +3,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AppGoogleMap
 {
@@ -18,13 +18,15 @@ namespace AppGoogleMap
     // リスト1件のデータを表すクラス
     public class SearchWordList
     {
-        public string TimeStamp { get; set; }
+        public int Id { get; set; }
         public string Word { get; set; }
+        public string TimeStamp { get; set; }
 
-        public SearchWordList(string TimeStamp, string Word)
+        public SearchWordList(int Id, string Word, string TimeStamp)
         {
-            this.TimeStamp = TimeStamp;
+            this.Id = Id;
             this.Word = Word;
+            this.TimeStamp = TimeStamp;
         }
     }
 
@@ -35,10 +37,13 @@ namespace AppGoogleMap
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                 , "SQLiteDataBase.db");
 
-        private List<SearchWordList> WordListData = new List<SearchWordList>();
+        public static ObservableCollection<SearchWordList> WordListData { get; set; }
+            = new ObservableCollection<SearchWordList>();
         public MainPage()
         {
             InitializeComponent();
+            // ListViewの初期化
+            WordListData = new ObservableCollection<SearchWordList>();
             // データベース初期設定
             using (var db = new SQLite.SQLiteConnection(DbPath))
             {   // テーブル作成
@@ -46,7 +51,7 @@ namespace AppGoogleMap
                 // データ取得
                 foreach (var row in db.Table<SearchWord>())
                 {
-                    WordListData.Add(new SearchWordList(row.TimeStamp.ToString(), row.Word));
+                    WordListData.Add(new SearchWordList(row.Id, row.Word, row.TimeStamp.ToString()));
                 }
             }
 
@@ -78,10 +83,21 @@ namespace AppGoogleMap
             }
         }
 
+        private void OnButtonDelete(object sender, EventArgs e)
+        {
+            SearchWordList remove_list = (SearchWordList)((Button)sender).CommandParameter;
+            using (var db = new SQLite.SQLiteConnection(MainPage.DbPath))
+            {
+                db.Delete<SearchWord>(remove_list.Id);
+            }
+            WordListData.Remove(remove_list);
+        }
+
         private void NextPage(object sender, EventArgs e)
         {
             Navigation.PushAsync(new SubPage());
         }
+
 
     }
 }

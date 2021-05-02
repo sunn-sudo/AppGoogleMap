@@ -20,12 +20,15 @@
                                 <Label Text="{Binding TimeStamp}" />
                                 <Button Text="{Binding Word}" Clicked="OnButtonSearch" />
                             </StackLayout>
-                            <Image
+                            <Button
                             WidthRequest="40"
                             HeightRequest="40"
-                            BackgroundColor="Olive" 
+                            Text="✖"
+                            BackgroundColor="Silver" 
                             VerticalOptions="Center"
-                            HorizontalOptions="EndAndExpand"/>
+                            HorizontalOptions="EndAndExpand"
+                            CommandParameter="{Binding .}"
+                            Clicked="OnButtonDelete"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
